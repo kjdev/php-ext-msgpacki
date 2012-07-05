@@ -27,6 +27,7 @@ MessagePack に関する詳細は [» http://msgpack.org/](http://msgpack.org/) 
 
 ## 本家との主な差異 ##
 
+* 本家とは [» Github](https://github.com/msgpack/msgpack/tree/master/php) にあるものを示します。
 * 配列は Map として処理します。(動作モードにより異なります)
 * convert に関しては未サポートです。
 * シリアライズ/アンシリアライズ処理の前後にフィルタ処理を付与できます。
@@ -58,7 +59,7 @@ $ sudo make install
 コンパイルオプションを指定する場合は次のようにします。
 
 ```
-./configure --disable-msgpacknd-namespace
+./configure --disable-msgpacki-namespace
 ```
 
 php.ini を次のように変更します。
@@ -88,13 +89,33 @@ php.ini を次のように変更します。
   extension=msgpacki.so
   ````
 
+Fedora 17 および CentOS 6.2 のパッケージがあります。
+
+* [» Fedora 17](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.0.0-1.fc17.kjdev.x86_64.rpm)
+* [» CentOS 6.2](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.0.0-1.el6.x86_64.rpm)
+
+### Windows へのインストール ###
+
+リリースごとのコンパイル済みバイナリがにあります。
+アーカイブを Unzip して、php_msgpacki.dll を PHP 拡張モジュールのディレクトリ
+(デフォルトは "ext") に置きます。
+
+* [» PHP 5.4.4 VC9 Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.4-Win32-VC9-x86-msgpacki-1.0.0.zip)
+* [» PHP 5.4.4 VC9 Non-Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.4-nts-Win32-VC9-x86-msgpacki-1.0.0.zip)
+
+そして、php.ini に次の行を追加します。
+
+````
+extension=php_msgpacki.dll
+````
+
 ## php.ini オプション ##
 
 php.ini の設定により動作が変化します。
 
 ### msgpacki.mode _int_ ###
 
-* デフォルト: 1
+* デフォルト: 2 (MSGPACKI\_MODE\_PHP)
 * 変更可能: PHP\_INI\_ALL
 
 シリアライズ処理の動作モードを設定します。
