@@ -1,0 +1,17 @@
+ARG_ENABLE("msgpacki", "enable msgpacki support", "no");
+
+if (PHP_MSGPACKI != "no") {
+   msgpacki_source =
+     "msgpacki.c " +
+     "msgpacki_function.c " +
+     "msgpacki_class.c " +
+     "msgpacki_filter.c " +
+     "msgpacki_session.c";
+   EXTENSION("msgpacki", msgpacki_source);
+   PHP_INSTALL_HEADERS("ext/msgpacki/", "php_msgpacki.h msgpacki_function.h msgpacki_class.h msgpacki_filter.h");
+}
+
+ARG_ENABLE("msgpacki-namespace", "enable msgpacki namespace", "yes");
+if (PHP_MSGPACKI_NAMESPACE == "yes") {
+   DEFINE("HAVE_MSGPACKI_NAMESPACE", 1);
+}
