@@ -1,0 +1,8 @@
+<?php
+namespace MessagePacki;
+
+interface autoload_interface {
+	function testFunction();
+}
+
+?>
