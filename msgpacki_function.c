@@ -573,10 +573,10 @@ mpi_serialize_object(msgpacki_buffer_t *buf, zval *val,
         zend_hash_exists(&ce->function_table, "__sleep", sizeof("__sleep"))) {
         INIT_PZVAL(&fname);
         ZVAL_STRINGL(&fname, "__sleep", sizeof("__sleep") - 1, 0);
-        MPIG(serialize_lock)++;
+        MSGPACKI_G(serialize_lock)++;
         res = call_user_function_ex(CG(function_table), &val, &fname,
                                     &retval_ptr, 0, 0, 1, NULL TSRMLS_CC);
-        MPIG(serialize_lock)--;
+        MSGPACKI_G(serialize_lock)--;
         if (res == SUCCESS && !EG(exception)) {
             if (retval_ptr) {
                 if (HASH_OF(retval_ptr)) {
@@ -816,21 +816,22 @@ ZEND_FUNCTION(msgpacki_serialize)
         return;
     }
 
-    MSGPACKI_FILTER_PRE_SERIALIZE(MPIG(filter).pre_serialize, struc, filter);
+    MSGPACKI_FILTER_PRE_SERIALIZE(MSGPACKI_G(filter).pre_serialize,
+                                  struc, filter);
 
     Z_TYPE_P(return_value) = IS_STRING;
     Z_STRVAL_P(return_value) = NULL;
     Z_STRLEN_P(return_value) = 0;
 
     MSGPACKI_SERIALIZE_INIT(var_hash);
-    msgpacki_serialize(&buf, struc, MPIG(mode), &var_hash TSRMLS_CC);
+    msgpacki_serialize(&buf, struc, MSGPACKI_G(mode), &var_hash TSRMLS_CC);
     MSGPACKI_SERIALIZE_DESTROY(var_hash);
 
     if (filter) {
         zval_ptr_dtor(struc);
     }
 
-    MSGPACKI_FILTER_POST_SERIALIZE(MPIG(filter).post_serialize,
+    MSGPACKI_FILTER_POST_SERIALIZE(MSGPACKI_G(filter).post_serialize,
                                    buf, return_value);
 
     if (buf.c) {
@@ -853,7 +854,8 @@ ZEND_FUNCTION(msgpacki_encode)
         return;
     }
 
-    MSGPACKI_FILTER_PRE_SERIALIZE(MPIG(filter).pre_serialize, struc, filter);
+    MSGPACKI_FILTER_PRE_SERIALIZE(MSGPACKI_G(filter).pre_serialize,
+                                  struc, filter);
 
     Z_TYPE_P(return_value) = IS_STRING;
     Z_STRVAL_P(return_value) = NULL;
@@ -867,7 +869,7 @@ ZEND_FUNCTION(msgpacki_encode)
         zval_ptr_dtor(struc);
     }
 
-    MSGPACKI_FILTER_POST_SERIALIZE(MPIG(filter).post_serialize,
+    MSGPACKI_FILTER_POST_SERIALIZE(MSGPACKI_G(filter).post_serialize,
                                    buf, return_value);
 
     if (buf.c) {
@@ -1417,10 +1419,10 @@ mpi_unserialize_nested_map(MPI_UNSERIALIZE_PARAMETER, long elements)
                              "__wakeup", sizeof("__wakeup"))) {
             INIT_PZVAL(&fname);
             ZVAL_STRINGL(&fname, "__wakeup", sizeof("__wakeup") - 1, 0);
-            MPIG(serialize_lock)++;
+            MSGPACKI_G(serialize_lock)++;
             call_user_function_ex(CG(function_table), rval, &fname,
                                   &retval_ptr, 0, 0, 1, NULL TSRMLS_CC);
-            MPIG(serialize_lock)--;
+            MSGPACKI_G(serialize_lock)--;
         }
 
         if (retval_ptr) {
@@ -1800,18 +1802,18 @@ ZEND_FUNCTION(msgpacki_unserialize)
         RETURN_FALSE;
     }
 
-    MSGPACKI_FILTER_PRE_UNSERIALIZE(MPIG(filter).pre_unserialize,
+    MSGPACKI_FILTER_PRE_UNSERIALIZE(MSGPACKI_G(filter).pre_unserialize,
                                     filter, buf, buf_len);
 
     p = (const unsigned char*)buf;
     MSGPACKI_UNSERIALIZE_INIT(var_hash);
 
-    if (MPIG(unserialize).level == 1) {
+    if (MSGPACKI_G(unserialize).level == 1) {
         msgpacki_unserialize_push(&var_hash, &return_value);
     }
 
     if (!msgpacki_unserialize(&return_value, &p, p + buf_len,
-                              MPIG(mode), &var_hash TSRMLS_CC) ||
+                              MSGPACKI_G(mode), &var_hash TSRMLS_CC) ||
         ((char*)p - buf) != buf_len) {
         MSGPACKI_UNSERIALIZE_DESTROY(var_hash);
         if (filter) {
@@ -1829,7 +1831,7 @@ ZEND_FUNCTION(msgpacki_unserialize)
         zval_ptr_dtor(&filter);
     }
 
-    MSGPACKI_FILTER_POST_UNSERIALIZE(MPIG(filter).post_unserialize,
+    MSGPACKI_FILTER_POST_UNSERIALIZE(MSGPACKI_G(filter).post_unserialize,
                                      return_value);
 }
 
@@ -1851,13 +1853,13 @@ ZEND_FUNCTION(msgpacki_decode)
         RETURN_FALSE;
     }
 
-    MSGPACKI_FILTER_PRE_UNSERIALIZE(MPIG(filter).pre_unserialize,
+    MSGPACKI_FILTER_PRE_UNSERIALIZE(MSGPACKI_G(filter).pre_unserialize,
                                     filter, buf, buf_len);
 
     p = (const unsigned char*)buf;
     MSGPACKI_UNSERIALIZE_INIT(var_hash);
 
-    if (MPIG(unserialize).level == 1) {
+    if (MSGPACKI_G(unserialize).level == 1) {
         msgpacki_unserialize_push(&var_hash, &return_value);
     }
 
@@ -1880,6 +1882,6 @@ ZEND_FUNCTION(msgpacki_decode)
         zval_ptr_dtor(&filter);
     }
 
-    MSGPACKI_FILTER_POST_UNSERIALIZE(MPIG(filter).post_unserialize,
+    MSGPACKI_FILTER_POST_UNSERIALIZE(MSGPACKI_G(filter).post_unserialize,
                                      return_value);
 }

@@ -161,11 +161,11 @@ ZEND_RINIT_FUNCTION(msgpacki)
 
 ZEND_RSHUTDOWN_FUNCTION(msgpacki)
 {
-    MPI_HASH_FREE(MPIG(filter).registers);
-    MPI_HASH_FREE(MPIG(filter).pre_serialize);
-    MPI_HASH_FREE(MPIG(filter).post_serialize);
-    MPI_HASH_FREE(MPIG(filter).pre_unserialize);
-    MPI_HASH_FREE(MPIG(filter).post_unserialize);
+    MPI_HASH_FREE(MSGPACKI_G(filter).registers);
+    MPI_HASH_FREE(MSGPACKI_G(filter).pre_serialize);
+    MPI_HASH_FREE(MSGPACKI_G(filter).post_serialize);
+    MPI_HASH_FREE(MSGPACKI_G(filter).pre_unserialize);
+    MPI_HASH_FREE(MSGPACKI_G(filter).post_unserialize);
     return SUCCESS;
 }
 

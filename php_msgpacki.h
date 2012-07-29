@@ -53,9 +53,9 @@ ZEND_BEGIN_MODULE_GLOBALS(msgpacki)
 ZEND_END_MODULE_GLOBALS(msgpacki)
 
 #ifdef ZTS
-#define MPIG(v) TSRMG(msgpacki_globals_id, zend_msgpacki_globals *, v)
+#define MSGPACKI_G(v) TSRMG(msgpacki_globals_id, zend_msgpacki_globals *, v)
 #else
-#define MPIG(v) (msgpacki_globals.v)
+#define MSGPACKI_G(v) (msgpacki_globals.v)
 #endif
 
 /* PHP version define */

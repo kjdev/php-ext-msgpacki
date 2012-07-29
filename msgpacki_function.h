@@ -39,57 +39,57 @@ ZEND_FUNCTION(msgpacki_decode);
 
 #define MSGPACKI_SERIALIZE_INIT(var_hash_ptr) \
 do  { \
-    if (MPIG(serialize_lock) || !MPIG(serialize).level) { \
+    if (MSGPACKI_G(serialize_lock) || !MSGPACKI_G(serialize).level) { \
         ALLOC_HASHTABLE(var_hash_ptr); \
         zend_hash_init((var_hash_ptr), 10, NULL, NULL, 0); \
-        if (!MPIG(serialize_lock)) { \
-            MPIG(serialize).var_hash = (void *)(var_hash_ptr); \
-            MPIG(serialize).level = 1; \
+        if (!MSGPACKI_G(serialize_lock)) { \
+            MSGPACKI_G(serialize).var_hash = (void *)(var_hash_ptr); \
+            MSGPACKI_G(serialize).level = 1; \
         } \
     } else { \
-        (var_hash_ptr) = (msgpacki_serialize_data_t)MPIG(serialize).var_hash; \
-        ++MPIG(serialize).level; \
+        (var_hash_ptr) = (msgpacki_serialize_data_t)MSGPACKI_G(serialize).var_hash; \
+        ++MSGPACKI_G(serialize).level; \
     } \
 } while(0)
 
 #define MSGPACKI_SERIALIZE_DESTROY(var_hash_ptr) \
 do { \
-    if (MPIG(serialize_lock) || !MPIG(serialize).level) { \
+    if (MSGPACKI_G(serialize_lock) || !MSGPACKI_G(serialize).level) { \
         zend_hash_destroy((var_hash_ptr)); \
         FREE_HASHTABLE(var_hash_ptr); \
     } else { \
-        if (!--MPIG(serialize).level) { \
-            zend_hash_destroy((msgpacki_serialize_data_t)MPIG(serialize).var_hash); \
-            FREE_HASHTABLE((msgpacki_serialize_data_t)MPIG(serialize).var_hash); \
-            MPIG(serialize).var_hash = NULL; \
+        if (!--MSGPACKI_G(serialize).level) { \
+            zend_hash_destroy((msgpacki_serialize_data_t)MSGPACKI_G(serialize).var_hash); \
+            FREE_HASHTABLE((msgpacki_serialize_data_t)MSGPACKI_G(serialize).var_hash); \
+            MSGPACKI_G(serialize).var_hash = NULL; \
         } \
     } \
 } while (0)
 
 #define MSGPACKI_UNSERIALIZE_INIT(var_hash_ptr) \
 do { \
-    if (MPIG(serialize_lock) || !MPIG(unserialize).level) { \
+    if (MSGPACKI_G(serialize_lock) || !MSGPACKI_G(unserialize).level) { \
         (var_hash_ptr) = (msgpacki_unserialize_data_t)ecalloc(1, sizeof(struct msgpacki_unserialize_data)); \
-        if (!MPIG(serialize_lock)) { \
-            MPIG(unserialize).var_hash = (void *)(var_hash_ptr); \
-            MPIG(unserialize).level = 1; \
+        if (!MSGPACKI_G(serialize_lock)) { \
+            MSGPACKI_G(unserialize).var_hash = (void *)(var_hash_ptr); \
+            MSGPACKI_G(unserialize).level = 1; \
         } \
     } else { \
-        (var_hash_ptr) = (msgpacki_unserialize_data_t)MPIG(unserialize).var_hash; \
-        ++MPIG(unserialize).level; \
+        (var_hash_ptr) = (msgpacki_unserialize_data_t)MSGPACKI_G(unserialize).var_hash; \
+        ++MSGPACKI_G(unserialize).level; \
     } \
 } while (0)
 
 #define MSGPACKI_UNSERIALIZE_DESTROY(var_hash_ptr) \
 do { \
-    if (MPIG(serialize_lock) || !MPIG(unserialize).level) { \
+    if (MSGPACKI_G(serialize_lock) || !MSGPACKI_G(unserialize).level) { \
         msgpacki_unserialize_destroy(&(var_hash_ptr)); \
         efree(var_hash_ptr); \
     } else { \
-        if (!--MPIG(unserialize).level) { \
+        if (!--MSGPACKI_G(unserialize).level) { \
             msgpacki_unserialize_destroy(&(var_hash_ptr)); \
             efree((var_hash_ptr)); \
-            MPIG(unserialize).var_hash = NULL; \
+            MSGPACKI_G(unserialize).var_hash = NULL; \
         } \
     } \
 } while (0)

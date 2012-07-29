@@ -103,9 +103,9 @@ ZEND_FUNCTION(msgpacki_filter_register)
         return;
     }
 
-    if (!MPIG(filter).registers) {
-        ALLOC_HASHTABLE(MPIG(filter).registers);
-        zend_hash_init(MPIG(filter).registers, 5, NULL,
+    if (!MSGPACKI_G(filter).registers) {
+        ALLOC_HASHTABLE(MSGPACKI_G(filter).registers);
+        zend_hash_init(MSGPACKI_G(filter).registers, 5, NULL,
                        (dtor_func_t)msgpacki_filter_data_dtor, 0);
     }
 
@@ -151,7 +151,7 @@ ZEND_FUNCTION(msgpacki_filter_register)
 
     data->object = obj;
 
-    if (zend_hash_add(MPIG(filter).registers,
+    if (zend_hash_add(MSGPACKI_G(filter).registers,
                       filtername, filtername_len+1, (void*)data,
                       sizeof(*data)+classname_len, NULL) == SUCCESS) {
         RETVAL_TRUE;
@@ -213,13 +213,13 @@ ZEND_FUNCTION(msgpacki_filter_append)
         return;
     }
 
-    if (!MPIG(filter).registers) {
+    if (!MSGPACKI_G(filter).registers) {
         zend_error(E_WARNING, "%s_append: Enable filter empty", FILTER_FUNC);
         return;
     }
 
-    if (zend_hash_find(MPIG(filter).registers, filtername, filtername_len+1,
-                       (void **)&data) == FAILURE) {
+    if (zend_hash_find(MSGPACKI_G(filter).registers, filtername,
+                       filtername_len+1, (void **)&data) == FAILURE) {
         zend_error(E_WARNING, "%s_append: No such find filter: \"%s\"",
                    FILTER_FUNC, filtername);
         return;
@@ -228,13 +228,13 @@ ZEND_FUNCTION(msgpacki_filter_append)
     if (Z_TYPE_P(data->object) == IS_OBJECT &&
         Z_OBJ_HT_P(data->object)->get_method != NULL) {
         union _zend_function *func = NULL;
-        MPI_FILTER_APPEND(pre_serialize, MPIG(filter).pre_serialize,
+        MPI_FILTER_APPEND(pre_serialize, MSGPACKI_G(filter).pre_serialize,
                           filtername, filtername_len);
-        MPI_FILTER_APPEND(post_serialize, MPIG(filter).post_serialize,
+        MPI_FILTER_APPEND(post_serialize, MSGPACKI_G(filter).post_serialize,
                           filtername, filtername_len);
-        MPI_FILTER_APPEND(pre_unserialize, MPIG(filter).pre_unserialize,
+        MPI_FILTER_APPEND(pre_unserialize, MSGPACKI_G(filter).pre_unserialize,
                           filtername, filtername_len);
-        MPI_FILTER_APPEND(post_unserialize, MPIG(filter).post_unserialize,
+        MPI_FILTER_APPEND(post_unserialize, MSGPACKI_G(filter).post_unserialize,
                           filtername, filtername_len);
     }
 
@@ -318,13 +318,13 @@ ZEND_FUNCTION(msgpacki_filter_prepend)
         return;
     }
 
-    if (!MPIG(filter).registers) {
+    if (!MSGPACKI_G(filter).registers) {
         zend_error(E_WARNING, "%s_prepend: Enable filter empty", FILTER_FUNC);
         return;
     }
 
-    if (zend_hash_find(MPIG(filter).registers, filtername, filtername_len+1,
-                       (void **)&data) == FAILURE) {
+    if (zend_hash_find(MSGPACKI_G(filter).registers, filtername,
+                       filtername_len+1, (void **)&data) == FAILURE) {
         zend_error(E_WARNING, "%s_prepend: No such find filter: \"%s\"",
                    FILTER_FUNC, filtername);
         return;
@@ -333,13 +333,13 @@ ZEND_FUNCTION(msgpacki_filter_prepend)
     if (Z_TYPE_P(data->object) == IS_OBJECT &&
         Z_OBJ_HT_P(data->object)->get_method != NULL) {
         union _zend_function *func = NULL;
-        MPI_FILTER_PREPEND(pre_serialize, MPIG(filter).pre_serialize,
+        MPI_FILTER_PREPEND(pre_serialize, MSGPACKI_G(filter).pre_serialize,
                            filtername, filtername_len);
-        MPI_FILTER_PREPEND(post_serialize, MPIG(filter).post_serialize,
+        MPI_FILTER_PREPEND(post_serialize, MSGPACKI_G(filter).post_serialize,
                            filtername, filtername_len);
-        MPI_FILTER_PREPEND(pre_unserialize, MPIG(filter).pre_unserialize,
+        MPI_FILTER_PREPEND(pre_unserialize, MSGPACKI_G(filter).pre_unserialize,
                            filtername, filtername_len);
-        MPI_FILTER_PREPEND(post_unserialize, MPIG(filter).post_unserialize,
+        MPI_FILTER_PREPEND(post_unserialize, MSGPACKI_G(filter).post_unserialize,
                            filtername, filtername_len);
     }
 
@@ -371,30 +371,33 @@ ZEND_FUNCTION(msgpacki_filter_remove)
     }
 
     /*
-    if (!MPIG(filter).registers) {
+    if (!MSGPACKI_G(filter).registers) {
         zend_error(E_WARNING, "%s_remove: Enable filter empty", FILTER_FUNC);
         return;
     }
 
-    if (zend_hash_find(MPIG(filter).registers, filtername, filtername_len+1,
-                       (void **)&data) == FAILURE) {
+    if (zend_hash_find(MSGPACKI_G(filter).registers, filtername,
+                       filtername_len+1, (void **)&data) == FAILURE) {
         zend_error(E_WARNING, "%s_remove: No such find filter: \"%s\"",
                    FILTER_FUNC, filtername);
         return;
     }
     */
 
-    MPI_FILTER_REMOVE(pre_serialize, MPIG(filter).pre_serialize,
+    MPI_FILTER_REMOVE(pre_serialize, MSGPACKI_G(filter).pre_serialize,
                       filtername, filtername_len);
-    MPI_FILTER_REMOVE(post_serialize, MPIG(filter).post_serialize,
+    MPI_FILTER_REMOVE(post_serialize, MSGPACKI_G(filter).post_serialize,
                       filtername, filtername_len);
-    MPI_FILTER_REMOVE(pre_unserialize, MPIG(filter).pre_unserialize,
+    MPI_FILTER_REMOVE(pre_unserialize, MSGPACKI_G(filter).pre_unserialize,
                       filtername, filtername_len);
-    MPI_FILTER_REMOVE(post_unserialize, MPIG(filter).post_unserialize,
+    MPI_FILTER_REMOVE(post_unserialize, MSGPACKI_G(filter).post_unserialize,
                       filtername, filtername_len);
 
     /* register remove */
-    /* zend_hash_del(MPIG(filter).registers, filtername, filtername_len+1); */
+    /*
+    zend_hash_del(MSGPACKI_G(filter).registers,
+                  filtername, filtername_len+1);
+    */
 
     RETVAL_TRUE;
 }
@@ -452,9 +455,9 @@ ZEND_FUNCTION(msgpacki_get_filters)
 
     array_init(return_value);
 
-    MPI_FILTER_GET(registers, MPIG(filter).registers);
-    MPI_FILTER_GET(pre_serialize, MPIG(filter).pre_serialize);
-    MPI_FILTER_GET(post_serialize, MPIG(filter).post_serialize);
-    MPI_FILTER_GET(pre_unserialize, MPIG(filter).pre_unserialize);
-    MPI_FILTER_GET(post_unserialize, MPIG(filter).post_unserialize);
+    MPI_FILTER_GET(registers, MSGPACKI_G(filter).registers);
+    MPI_FILTER_GET(pre_serialize, MSGPACKI_G(filter).pre_serialize);
+    MPI_FILTER_GET(post_serialize, MSGPACKI_G(filter).post_serialize);
+    MPI_FILTER_GET(pre_unserialize, MSGPACKI_G(filter).pre_unserialize);
+    MPI_FILTER_GET(post_unserialize, MSGPACKI_G(filter).post_unserialize);
 }

@@ -55,7 +55,7 @@ PS_SERIALIZER_DECODE_FUNC(msgpacki)
     p = (const unsigned char*)val;
     MSGPACKI_UNSERIALIZE_INIT(var_hash);
 
-    if (MPIG(unserialize).level == 1) {
+    if (MSGPACKI_G(unserialize).level == 1) {
         msgpacki_unserialize_push(&var_hash, &retval);
     }
 

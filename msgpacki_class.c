@@ -288,8 +288,8 @@ static inline msgpacki_filter_data_t
     zval fname, *obj, *retval = NULL;
     msgpacki_filter_data_t *data;
 
-    if (!MPIG(filter).registers ||
-        zend_hash_find(MPIG(filter).registers, name, name_len+1,
+    if (!MSGPACKI_G(filter).registers ||
+        zend_hash_find(MSGPACKI_G(filter).registers, name, name_len+1,
                        (void **)&data) == FAILURE) {
         if (!(intern->filters)) {
             ALLOC_HASHTABLE(intern->filters);
@@ -356,7 +356,7 @@ static inline msgpacki_filter_data_t
 
 ZEND_METHOD(MessagePacki, __construct)
 {
-    long mode = MPIG(mode);
+    long mode = MSGPACKI_G(mode);
 #if ZEND_MODULE_API_NO >= 20090626
     zend_error_handling error_handling;
     zend_replace_error_handling(EH_THROW, NULL, &error_handling TSRMLS_CC);
@@ -437,7 +437,7 @@ ZEND_METHOD(MessagePacki, unpack)
     p = (const unsigned char*)buf;
     MSGPACKI_UNSERIALIZE_INIT(var_hash);
 
-    if (MPIG(unserialize).level == 1) {
+    if (MSGPACKI_G(unserialize).level == 1) {
         msgpacki_unserialize_push(&var_hash, &return_value);
     }
 
