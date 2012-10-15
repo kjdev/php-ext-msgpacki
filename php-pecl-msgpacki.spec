@@ -2,11 +2,11 @@
 %{!?php_extdir: %{expand: %%define php_extdir %(php-config --extension-dir)}}
 
 %global pecl_name msgpacki
-%global git_tag d01299d
+%global git_tag 70dda26
 
 Summary: PHP MessagePack Improved Extension
 Name: php-pecl-%{pecl_name}
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 Source: kjdev-php-ext-%{pecl_name}-v%{version}-0-g%{git_tag}.tar.gz
 License: PHP License version 3.01
