@@ -745,6 +745,7 @@ mpi_serialize_intern(msgpacki_buffer_t *buf, zval *struc,
     }
 }
 
+#if HAVE_PHP_SESSION
 PHP_MSGPACKI_API void
 msgpacki_serialize_session(msgpacki_buffer_t *buf,
                            msgpacki_serialize_data_t *var_hash TSRMLS_DC)
@@ -794,6 +795,7 @@ msgpacki_serialize_session(msgpacki_buffer_t *buf,
 
     smart_str_0(buf);
 }
+#endif
 
 PHP_MSGPACKI_API void
 msgpacki_serialize(msgpacki_buffer_t *buf, zval **struc, long mode,

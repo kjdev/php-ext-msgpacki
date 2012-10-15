@@ -1,5 +1,11 @@
 --TEST--
 Test session_encode() function : basic functionality
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --INI--
 serialize_precision=100
 session.serialize_handler=msgpacki

@@ -1,5 +1,11 @@
 --TEST--
 correct instantiation of references between variables in sessions
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --INI--
 session.use_cookies=0
 session.cache_limiter=

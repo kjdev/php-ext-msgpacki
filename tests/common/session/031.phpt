@@ -1,5 +1,11 @@
 --TEST--
 Check for serialization handler
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --FILE--
 <?php
 if(!extension_loaded('msgpacki')) {

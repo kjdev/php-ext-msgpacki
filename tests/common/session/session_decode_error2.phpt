@@ -2,6 +2,10 @@
 Test session_decode() function : error functionality
 --SKIPIF--
 <?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 if (version_compare(PHP_VERSION, '5.3.0') < 0) {
     die("skip this test is for PHP 5.3 or newer");
 }

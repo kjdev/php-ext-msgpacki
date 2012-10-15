@@ -1,5 +1,11 @@
 --TEST--
 custom save handler, multiple session_start()s, complex data structure test.
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --INI--
 session.use_cookies=0
 session.cache_limiter=

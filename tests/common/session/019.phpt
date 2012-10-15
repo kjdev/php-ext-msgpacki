@@ -1,5 +1,11 @@
 --TEST--
 serializing references test case using globals
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --INI--
 session.use_cookies=0
 session.cache_limiter=

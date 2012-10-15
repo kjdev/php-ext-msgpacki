@@ -8,12 +8,14 @@ MessagePack に関する詳細は [» http://msgpack.org/](http://msgpack.org/) 
 
 ## 開発環境 ##
 
-* PHP 5.4.4
-* Fedora 16 (x86_64)
+* PHP 5.4.4 / 5.4.7
+* Fedora 16 / 17 (x86_64)
 
 ### 検証 ##
 
 検証した環境およびバージョンは次の通りです。
+
+#### バージョン: 1.0.0 ####
 
 * PHP 5.2.17 on Fedora 16 (x86_64)
 * PHP 5.2.17 [ZTS] on Fedora 16 (x86_64)
@@ -24,6 +26,13 @@ MessagePack に関する詳細は [» http://msgpack.org/](http://msgpack.org/) 
 * PHP 5.4.4 on Fedora 17 (i686) [KVM]
 * PHP 5.4.4 on Windows Vista Home Premium SP2 (32 bit)
 * PHP 5.4.4 [nts] on Windows Vista Home Premium SP2 (32 bit)
+
+#### バージョン: 1.0.1 ####
+
+* PHP 5.4.7 on Fedora 17 (x86_64)
+* PHP 5.4.7 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.4.7 on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.7 [nts] on Windows Vista Home Premium SP2 (32 bit)
 
 ## 本家との主な差異 ##
 
@@ -279,8 +288,7 @@ mixed **msgpacki\_decode** ( string _$str_ )
 
 bool **msgpacki\_filter\_register** ( string _$filtername_ , string _$classname_ )
 
-シリアライズ/アンシリアライズの関数で使うことのできるカスタムフィルタを登録しま
-す。
+シリアライズ/アンシリアライズの関数で使うことのできるカスタムフィルタを登録します。
 
 #### パラメータ ####
 
@@ -715,39 +723,39 @@ public mixed **MessagePacki\_Filter::post\_unserialize** ( mixed _$in_ )
 
 ### 一覧 ###
 
-* MessagePack\\serialize
+* MessagePacki\\serialize
 
   msgpacki\_serialize() 関数のエイリアス
 
-* MessagePack\\unserialize
+* MessagePacki\\unserialize
 
   msgpacki\_unserialize() 関数のエイリアス
 
-* MessagePack\\encode
+* MessagePacki\\encode
 
   msgpacki\_encode() 関数のエイリアス
 
-* MessagePack\\decode
+* MessagePacki\\decode
 
   msgpacki\_decode() 関数のエイリアス
 
-* MessagePack\\filter\_register
+* MessagePacki\\filter\_register
 
   msgpacki\_filter\_register() 関数のエイリアス
 
-* MessagePack\\filter\_append
+* MessagePacki\\filter\_append
 
   msgpacki\_filter\_append() 関数のエイリアス
 
-* MessagePack\\filter\_prepend
+* MessagePacki\\filter\_prepend
 
   msgpacki\_filter\_prepend() 関数のエイリアス
 
-* MessagePack\\filter\_remove
+* MessagePacki\\filter\_remove
 
   msgpacki\_filter\_remove() 関数のエイリアス
 
-* MessagePack\\msgpacki\_filter\_get\_filters
+* MessagePacki\\msgpacki\_filter\_get\_filters
 
   msgpacki\_filter\_get\_filters() 関数のエイリアス
 
@@ -757,7 +765,7 @@ public mixed **MessagePacki\_Filter::post\_unserialize** ( mixed _$in_ )
 
 ### 一覧 ###
 
-* MessagePack\\Filter
+* MessagePacki\\Filter
 
   MessagePacki\_Filter クラスのエイリアス
 
@@ -773,3 +781,8 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 この時の動作モード MSGPACKI\_MODE\_PHP になります。
 
 フィルターはサポートしておりません。
+
+
+## 関連ページ ##
+
+* [code coverage report](http://gcov.at-ninja.jp/php-ext-msgpacki/)

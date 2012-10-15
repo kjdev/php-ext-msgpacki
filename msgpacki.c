@@ -114,7 +114,9 @@ ZEND_MINIT_FUNCTION(msgpacki)
 
     msgpacki_register_filters(TSRMLS_C);
     msgpacki_register_classes(TSRMLS_C);
+#if HAVE_PHP_SESSION
     msgpacki_register_session(TSRMLS_C);
+#endif
 
     REGISTER_LONG_CONSTANT("MSGPACKI_MODE_ORIGIN", PHP_MSGPACKI_MODE_ORIGIN,
                            CONST_CS | CONST_PERSISTENT);

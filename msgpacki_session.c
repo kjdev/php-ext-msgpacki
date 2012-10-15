@@ -11,16 +11,16 @@
 
 ZEND_EXTERN_MODULE_GLOBALS(msgpacki);
 
+#if HAVE_PHP_SESSION
+
 PS_SERIALIZER_FUNCS(msgpacki);
 
 PHP_MSGPACKI_API int
 msgpacki_register_session(TSRMLS_D)
 {
-#if HAVE_PHP_SESSION
     php_session_register_serializer("msgpacki",
                                     PS_SERIALIZER_ENCODE_NAME(msgpacki),
                                     PS_SERIALIZER_DECODE_NAME(msgpacki));
-#endif
     return SUCCESS;
 }
 
@@ -91,3 +91,4 @@ PS_SERIALIZER_DECODE_FUNC(msgpacki)
 
     return SUCCESS;
 }
+#endif

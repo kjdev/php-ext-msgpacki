@@ -19,10 +19,11 @@ typedef smart_str msgpacki_buffer_t;
 PHP_MSGPACKI_API void
 msgpacki_serialize(msgpacki_buffer_t *buf, zval **struc, long mode,
                    msgpacki_serialize_data_t *var_hash TSRMLS_DC);
+#if HAVE_PHP_SESSION
 PHP_MSGPACKI_API void
 msgpacki_serialize_session(msgpacki_buffer_t *buf,
                            msgpacki_serialize_data_t *var_hash TSRMLS_DC);
-
+#endif
 PHP_MSGPACKI_API int
 msgpacki_unserialize(zval **rval, const unsigned char **p,
                      const unsigned char *max, long mode,

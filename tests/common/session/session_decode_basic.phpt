@@ -1,5 +1,11 @@
 --TEST--
 Test session_decode() function : basic functionality
+--SKIPIF--
+<?php
+if (!extension_loaded("session")) {
+    echo "skip needs session enabled";
+}
+?>
 --INI--
 session.serialize_handler=msgpacki
 --FILE--
