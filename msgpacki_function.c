@@ -1658,9 +1658,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 2, p, limit);
                 MPI_UNSERIALIZE_PUSH();
                 items = _msgpack_be16(cb.u16);
-                if (items < 0) {
-                    return 0;
-                }
                 INIT_PZVAL(*rval);
                 if (items == 0) {
                     ZVAL_EMPTY_STRING(*rval);
@@ -1681,9 +1678,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 4, p, limit);
                 MPI_UNSERIALIZE_PUSH();
                 items = _msgpack_be32(cb.u32);
-                if (items < 0) {
-                    return 0;
-                }
                 INIT_PZVAL(*rval);
                 if (items == 0) {
                     ZVAL_EMPTY_STRING(*rval);
@@ -1704,9 +1698,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 2, p, limit);
                 MPI_UNSERIALIZE_PUSH();
                 items = _msgpack_be16(cb.u16);
-                if (items < 0) {
-                    return 0;
-                }
                 INIT_PZVAL(*rval);
                 array_init_size(*rval, items);
                 return mpi_unserialize_nested_array(MPI_UNSERIALIZE_PASSTHRU,
@@ -1718,9 +1709,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 4, p, limit);
                 MPI_UNSERIALIZE_PUSH();
                 items = _msgpack_be32(cb.u32);
-                if (items < 0) {
-                    return 0;
-                }
                 INIT_PZVAL(*rval);
                 array_init_size(*rval, items);
                 return mpi_unserialize_nested_array(MPI_UNSERIALIZE_PASSTHRU,
@@ -1731,10 +1719,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 uint16_t items;
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 2, p, limit);
                 items = _msgpack_be16(cb.u16);
-                if (items < 0) {
-                    MPI_UNSERIALIZE_PUSH();
-                    return 0;
-                }
                 if (items == 0) {
                     MPI_UNSERIALIZE_PUSH();
                     INIT_PZVAL(*rval);
@@ -1750,10 +1734,6 @@ msgpacki_unserialize(MPI_UNSERIALIZE_PARAMETER)
                 uint32_t items;
                 MPI_UNSERIALIZE_CAST_BLOCK(cursor, 4, p, limit);
                 items = _msgpack_be32(cb.u32);
-                if (items < 0) {
-                    MPI_UNSERIALIZE_PUSH();
-                    return 0;
-                }
                 if (items == 0) {
                     MPI_UNSERIALIZE_PUSH();
                     INIT_PZVAL(*rval);
