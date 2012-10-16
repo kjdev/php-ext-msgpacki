@@ -1,7 +1,7 @@
 #ifndef PHP_MSGPACKI_H
 #define PHP_MSGPACKI_H
 
-#define MSGPACKI_EXT_VERSION "1.0.1"
+#define MSGPACKI_EXT_VERSION "1.0.2"
 
 extern zend_module_entry msgpacki_module_entry;
 #define phpext_msgpacki_ptr &msgpacki_module_entry
