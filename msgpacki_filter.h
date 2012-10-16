@@ -57,9 +57,8 @@ while (zend_hash_get_current_data_ex(ht, (void**)&obj, &pos) == SUCCESS) { \
 if (ht) { \
     zval *obj, *arg, *retval; \
     HashPosition pos; \
-    MAKE_STD_ZVAL(arg); \
-    *arg = **struc; \
-    zval_copy_ctor(arg); \
+    arg = *struc; \
+    Z_ADDREF_P(arg); \
     MSGPACKI_FILTER_CALLBACK_FORWARD(pre_serialize, ht, retval); \
     struc = &retval; \
     filter = 1; \

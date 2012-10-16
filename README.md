@@ -245,7 +245,7 @@ mixed **msgpacki\_unserialize** ( string _$str_ )
 
 #### 説明 ####
 
-string **msgpacki\_encode** ( mixed _$value_ )
+string **msgpacki\_encode** ( mixed _$value_ [, int options = MSGPACKI\_MODE\_ORIGIN ] )
 
 値の保存可能な表現を生成します。
 
@@ -254,6 +254,10 @@ string **msgpacki\_encode** ( mixed _$value_ )
 * _value_
 
   シリアル化する値。
+
+* _options_
+
+  動作モード。
 
 #### 返り値 ####
 
@@ -266,7 +270,7 @@ value の保存可能なバイトストリーム表現を含む文字列を返�
 
 #### 説明 ####
 
-mixed **msgpacki\_decode** ( string _$str_ )
+mixed **msgpacki\_decode** ( string _$str_ [, int options = MSGPACKI\_MODE\_ORIGIN ] )
 
 シリアル化された変数を PHP 変数値に戻す変換を行います。
 
@@ -275,6 +279,10 @@ mixed **msgpacki\_decode** ( string _$str_ )
 * _str_
 
   シリアル化された文字列。
+
+* _options_
+
+  動作モード。
 
 #### 返り値 ####
 
@@ -597,7 +605,7 @@ MessagePacki::append\_filter() あるいは MessagePacki::prepend\_filter() で�
 
 #### 説明 ####
 
-public array **MessagePacki::get\_filters** ( string _$type_ )
+public array **MessagePacki::get\_filters** ( [ string _$type_ ] )
 
 登録されているフィルタの一覧を取得します。
 
@@ -786,3 +794,4 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 ## 関連ページ ##
 
 * [code coverage report](http://gcov.at-ninja.jp/php-ext-msgpacki/)
+* [api document](http://api.at-ninja.jp/php-ext-msgpacki/)

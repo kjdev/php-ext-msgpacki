@@ -18,7 +18,7 @@ phpinfo();
 msgpacki
 
 msgpacki support => enabled
-extension version => 1.0.1
+extension version => %d.%d.%d
 session support => enabled
 
 Directive => Local Value => Master Value
