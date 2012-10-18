@@ -1,5 +1,7 @@
 # MessagePack 改良版拡張モジュール #
 
+[![Build Status](https://secure.travis-ci.org/kjdev/php-ext-msgpacki.png?branch=master)](http://travis-ci.org/kjdev/php-ext-msgpacki)
+
 msgpacki 拡張サポートによって MessagePack による変数のシリアライズ処理を行うこと
 ができるようになります。
 
