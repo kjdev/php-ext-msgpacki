@@ -8,41 +8,19 @@ msgpacki 拡張サポートによって MessagePack による変数のシリア�
 MessagePack に関する詳細は [» http://msgpack.org/](http://msgpack.org/) をご覧く
 ださい。
 
-## 開発環境 ##
-
-* PHP 5.4.4 / 5.4.7
-* Fedora 16 / 17 (x86_64)
-
-### 検証 ##
-
-検証した環境およびバージョンは次の通りです。
-
-#### バージョン: 1.0.0 ####
-
-* PHP 5.2.17 on Fedora 16 (x86_64)
-* PHP 5.2.17 [ZTS] on Fedora 16 (x86_64)
-* PHP 5.3.14 on Fedora 16 (x86_64)
-* PHP 5.3.14 [ZTS] on Fedora 16 (x86_64)
-* PHP 5.4.4 on Fedora 16 (x86_64)
-* PHP 5.4.4 [ZTS] on Fedora 16 (x86_64)
-* PHP 5.4.4 on Fedora 17 (i686) [KVM]
-* PHP 5.4.4 on Windows Vista Home Premium SP2 (32 bit)
-* PHP 5.4.4 [nts] on Windows Vista Home Premium SP2 (32 bit)
-
-#### バージョン: 1.0.1 ####
-
-* PHP 5.4.7 on Fedora 17 (x86_64)
-* PHP 5.4.7 [ZTS] on Fedora 16 (x86_64)
-* PHP 5.4.7 on Windows Vista Home Premium SP2 (32 bit)
-* PHP 5.4.7 [nts] on Windows Vista Home Premium SP2 (32 bit)
-
 ## 本家との主な差異 ##
 
-* 本家とは [» Github](https://github.com/msgpack/msgpack/tree/master/php) にあるものを示します。
+* 本家とは [» Github](https://github.com/msgpack/msgpack-php) にあるものを示します。
 * 配列は Map として処理します。(動作モードにより異なります)
 * convert に関しては未サポートです。
 * シリアライズ/アンシリアライズ処理の前後にフィルタ処理を付与できます。
 * 名前空間によるエイリアス関数を定義しています。(使用しないことも可能)
+
+## 変更点 ##
+
+#### バージョン: 1.1.0 ####
+
+* msgpacki\_unserialize()、msgpacki\_decode()、MessagePacki::unpack() の引数に処理の成否を受け取る status を追加。
 
 ## インストール ##
 
@@ -184,7 +162,6 @@ php.ini の設定により動作が変化します。
 * msgpacki\_unserialize — 保存用表現から PHP の値を生成する
 * msgpacki\_encode — 値の保存可能な表現を生成する
 * msgpacki\_decode — 保存用表現から PHP の値を生成する
-
 * msgpacki\_filter\_register — フィルタを登録する
 * msgpacki\_filter\_append — フィルタをリストの末尾に付与する
 * msgpacki\_filter\_prepend — フィルタをリストの先頭に付与する
@@ -220,7 +197,7 @@ value の保存可能なバイトストリーム表現を含む文字列を返�
 
 #### 説明 ####
 
-mixed **msgpacki\_unserialize** ( string _$str_ )
+mixed **msgpacki\_unserialize** ( string _$str_ [, bool _&$status_ ] )
 
 シリアル化された変数を PHP 変数値に戻す変換を行います。
 
@@ -233,6 +210,13 @@ mixed **msgpacki\_unserialize** ( string _$str_ )
   もしアンシリアライズする変数がオブジェクトの場合、オブジェクトが無事再作成され
   た後、PHP は自動的にメンバ関数 __wakeup() (存在していれば) をコールしようとし
   ます。
+
+* _status_
+
+  処理の成否結果。
+
+  status が指定された場合、正常に処理できた場合は TRUE、
+  それ以外は FALSE が保存されます。
 
 #### 返り値 ####
 
@@ -272,7 +256,7 @@ value の保存可能なバイトストリーム表現を含む文字列を返�
 
 #### 説明 ####
 
-mixed **msgpacki\_decode** ( string _$str_ [, int options = MSGPACKI\_MODE\_ORIGIN ] )
+mixed **msgpacki\_decode** ( string _$str_ [, int options = MSGPACKI\_MODE\_ORIGIN, bool _&$status_ ] )
 
 シリアル化された変数を PHP 変数値に戻す変換を行います。
 
@@ -285,6 +269,13 @@ mixed **msgpacki\_decode** ( string _$str_ [, int options = MSGPACKI\_MODE\_ORIG
 * _options_
 
   動作モード。
+
+* _status_
+
+  処理の成否結果。
+
+  status が指定された場合、正常に処理できた場合は TRUE、
+  それ以外は FALSE が保存されます。
 
 #### 返り値 ####
 
@@ -415,7 +406,7 @@ MessagePacki {
     /* メソッド */
     public __construct( [ int $mode = MSGPACKI_MODE_PHP ] )
     public string pack( mixed $value )
-    public mixed unpack( string $str )
+    public mixed unpack( string $str [, bool &$status ] )
     public int get_mode()
     public bool set_mode( int $mode )
     public bool append_filter( string $name )
@@ -487,7 +478,7 @@ value の保存可能な文字列を返します。
 
 #### 説明 ####
 
-public mixed **MessagePacki::unpack** ( string _$str_ )
+public mixed **MessagePacki::unpack** ( string _$str_ [, bool _&$status_ ] )
 
 シリアル化された変数を PHP 変数値に戻す変換を行います。
 
@@ -498,6 +489,13 @@ msgpacki\_unserialize() と同様の処理を行います。
 * _str_
 
   シリアル化された文字列。
+
+* _status_
+
+  処理の成否結果。
+
+  status が指定された場合、正常に処理できた場合は TRUE、
+  それ以外は FALSE が保存されます。
 
 #### 返り値 ####
 
@@ -791,6 +789,42 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 この時の動作モード MSGPACKI\_MODE\_PHP になります。
 
 フィルターはサポートしておりません。
+
+
+## 開発環境 ##
+
+* PHP 5.4.4 / 5.4.7 / 5.4.8
+* Fedora 16 / 17 (x86_64)
+
+### 検証 ##
+
+検証した環境およびバージョンは次の通りです。
+
+#### バージョン: 1.1.0 ####
+
+* PHP 5.4.8 on Fedora 17 (x86_64)
+* PHP 5.4.8 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.4.8 on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.8 [nts] on Windows Vista Home Premium SP2 (32 bit)
+
+#### バージョン: 1.0.1 ####
+
+* PHP 5.4.7 on Fedora 17 (x86_64)
+* PHP 5.4.7 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.4.7 on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.7 [nts] on Windows Vista Home Premium SP2 (32 bit)
+
+#### バージョン: 1.0.0 ####
+
+* PHP 5.2.17 on Fedora 16 (x86_64)
+* PHP 5.2.17 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.3.14 on Fedora 16 (x86_64)
+* PHP 5.3.14 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.4.4 on Fedora 16 (x86_64)
+* PHP 5.4.4 [ZTS] on Fedora 16 (x86_64)
+* PHP 5.4.4 on Fedora 17 (i686) [KVM]
+* PHP 5.4.4 on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.4 [nts] on Windows Vista Home Premium SP2 (32 bit)
 
 
 ## 関連ページ ##

@@ -6,7 +6,7 @@
 
 Summary: PHP MessagePack Improved Extension
 Name: php-pecl-%{pecl_name}
-Version: 1.0.2
+Version: 1.1.0
 Release: 1%{?dist}
 Source: kjdev-php-ext-%{pecl_name}-v%{version}-0-g%{git_tag}.tar.gz
 License: PHP License version 3.01
