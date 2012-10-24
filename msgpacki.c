@@ -20,6 +20,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_unserialize, 0, 0, 1)
     ZEND_ARG_INFO(0, str)
+    ZEND_ARG_INFO(1, status)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_encode, 0, 0, 1)
@@ -30,6 +31,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_decode, 0, 0, 1)
     ZEND_ARG_INFO(0, str)
     ZEND_ARG_INFO(0, options)
+    ZEND_ARG_INFO(1, status)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_filter_register, 0, 0, 2)

@@ -815,7 +815,7 @@ ZEND_FUNCTION(msgpacki_serialize)
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
                               "Z", &struc) == FAILURE) {
-        return;
+        RETURN_FALSE;
     }
 
     MSGPACKI_FILTER_PRE_SERIALIZE(MSGPACKI_G(filter).pre_serialize,
@@ -853,7 +853,7 @@ ZEND_FUNCTION(msgpacki_encode)
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
                               "Z|l", &struc, &options) == FAILURE) {
-        return;
+        RETURN_FALSE;
     }
 
     MSGPACKI_FILTER_PRE_SERIALIZE(MSGPACKI_G(filter).pre_serialize,
@@ -1774,10 +1774,16 @@ ZEND_FUNCTION(msgpacki_unserialize)
     const unsigned char *p;
     msgpacki_unserialize_data_t var_hash;
     zval *filter = NULL;
+    zval *status = NULL;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
-                              "s", &buf, &buf_len) == FAILURE) {
+                              "s|z", &buf, &buf_len, &status) == FAILURE) {
         RETURN_FALSE;
+    }
+
+    if (status) {
+        zval_dtor(status);
+        ZVAL_FALSE(status);
     }
 
     if (buf_len == 0) {
@@ -1815,6 +1821,10 @@ ZEND_FUNCTION(msgpacki_unserialize)
 
     MSGPACKI_FILTER_POST_UNSERIALIZE(MSGPACKI_G(filter).post_unserialize,
                                      return_value);
+
+    if (status) {
+        ZVAL_TRUE(status);
+    }
 }
 
 ZEND_FUNCTION(msgpacki_decode)
@@ -1825,10 +1835,17 @@ ZEND_FUNCTION(msgpacki_decode)
     msgpacki_unserialize_data_t var_hash;
     long options = PHP_MSGPACKI_MODE_ORIGIN;
     zval *filter = NULL;
+    zval *status = NULL;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
-                              "s|l", &buf, &buf_len, &options) == FAILURE) {
+                              "s|lz", &buf, &buf_len,
+                              &options, &status) == FAILURE) {
         RETURN_FALSE;
+    }
+
+    if (status) {
+        zval_dtor(status);
+        ZVAL_FALSE(status);
     }
 
     if (buf_len == 0) {
@@ -1866,4 +1883,8 @@ ZEND_FUNCTION(msgpacki_decode)
 
     MSGPACKI_FILTER_POST_UNSERIALIZE(MSGPACKI_G(filter).post_unserialize,
                                      return_value);
+
+    if (status) {
+        ZVAL_TRUE(status);
+    }
 }

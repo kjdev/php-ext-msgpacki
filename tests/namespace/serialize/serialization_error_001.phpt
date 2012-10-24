@@ -16,7 +16,7 @@ var_dump( unserialize() );
 
 //Test serialize with one more than the expected number of arguments
 var_dump( serialize(1,2) );
-var_dump( unserialize(1,2) );
+var_dump( unserialize(1,$status,2) );
 
 echo "Done";
 ?>
@@ -24,14 +24,14 @@ echo "Done";
 *** Testing serialize()/unserialize() : error conditions ***
 
 Warning: MessagePacki\serialize() expects exactly 1 parameter, 0 given in %s on line 11
-NULL
+bool(false)
 
-Warning: MessagePacki\unserialize() expects exactly 1 parameter, 0 given in %s on line 12
+Warning: MessagePacki\unserialize() expects at least 1 parameter, 0 given in %s on line 12
 bool(false)
 
 Warning: MessagePacki\serialize() expects exactly 1 parameter, 2 given in %s on line 15
-NULL
+bool(false)
 
-Warning: MessagePacki\unserialize() expects exactly 1 parameter, 2 given in %s on line 16
+Warning: MessagePacki\unserialize() expects at most 2 parameters, 3 given in %s on line 16
 bool(false)
 Done

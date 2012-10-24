@@ -35,6 +35,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_method_unpack, 0, 0, 1)
     ZEND_ARG_INFO(0, str)
+    ZEND_ARG_INFO(1, status)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_msgpacki_method_get_mode, 0, 0, 0)
@@ -420,11 +421,17 @@ ZEND_METHOD(MessagePacki, unpack)
     const unsigned char *p;
     msgpacki_unserialize_data_t var_hash;
     zval *filter = NULL;
+    zval *status = NULL;
     MPI_OBJECT;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
-                              "s", &buf, &buf_len) == FAILURE) {
+                              "s|z", &buf, &buf_len, &status) == FAILURE) {
         RETURN_FALSE;
+    }
+
+    if (status) {
+        zval_dtor(status);
+        ZVAL_FALSE(status);
     }
 
     if (buf_len == 0) {
@@ -462,6 +469,10 @@ ZEND_METHOD(MessagePacki, unpack)
     }
 
     MSGPACKI_FILTER_POST_UNSERIALIZE(intern->post_unserialize, return_value);
+
+    if (status) {
+        ZVAL_TRUE(status);
+    }
 }
 
 ZEND_METHOD(MessagePacki, set_mode)
