@@ -80,8 +80,8 @@ php.ini を次のように変更します。
 
 Fedora 17 および CentOS 6.2 のパッケージがあります。
 
-* [» Fedora 17](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.0.0-1.fc17.kjdev.x86_64.rpm)
-* [» CentOS 6.2](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.0.0-1.el6.x86_64.rpm)
+* [» Fedora 17](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.1.0-1.fc17.kjdev.x86_64.rpm)
+* [» CentOS 6.2](https://github.com/downloads/kjdev/php-ext-msgpacki/php-pecl-msgpacki-1.1.0-1.el6.x86_64.rpm)
 
 ### Windows へのインストール ###
 
@@ -89,8 +89,8 @@ Fedora 17 および CentOS 6.2 のパッケージがあります。
 アーカイブを Unzip して、php_msgpacki.dll を PHP 拡張モジュールのディレクトリ
 (デフォルトは "ext") に置きます。
 
-* [» PHP 5.4.4 VC9 Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.4-Win32-VC9-x86-msgpacki-1.0.0.zip)
-* [» PHP 5.4.4 VC9 Non-Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.4-nts-Win32-VC9-x86-msgpacki-1.0.0.zip)
+* [» PHP 5.4.8 VC9 Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.8-Win32-VC9-x86-msgpacki-1.1.0.zip)
+* [» PHP 5.4.8 VC9 Non-Thread-Safe extension](https://github.com/downloads/kjdev/php-ext-msgpacki/php-5.4.8-nts-Win32-VC9-x86-msgpacki-1.1.0.zip)
 
 そして、php.ini に次の行を追加します。
 
