@@ -806,6 +806,9 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 * PHP 5.4.8 [ZTS] on Fedora 16 (x86_64)
 * PHP 5.4.8 on Windows Vista Home Premium SP2 (32 bit)
 * PHP 5.4.8 [nts] on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.13 on Fedora 17 (x86_64)
+* PHP 5.4.13 on Windows Vista Home Premium SP2 (32 bit)
+* PHP 5.4.13 [nts] on Windows Vista Home Premium SP2 (32 bit)
 
 #### バージョン: 1.0.1 ####
 
@@ -831,3 +834,4 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 
 * [code coverage report](http://gcov.at-ninja.jp/php-ext-msgpacki/)
 * [api document](http://api.at-ninja.jp/php-ext-msgpacki/)
+* [Windows Binary](http://kjdev.sdbx.jp/windows/)
