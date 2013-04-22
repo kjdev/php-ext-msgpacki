@@ -832,6 +832,6 @@ msgpacki を指定することで MessagePack フォーマットでセッショ�
 
 ## 関連ページ ##
 
-* [code coverage report](http://gcov.at-ninja.jp/php-ext-msgpacki/)
-* [api document](http://api.at-ninja.jp/php-ext-msgpacki/)
+* [code coverage report](http://gcov.at-ninja.jp.2-t.jp/71)
+* [api document](http://api.at-ninja.jp.2-t.jp/72)
 * [Windows Binary](http://kjdev.sdbx.jp/windows/)
